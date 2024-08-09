@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const Form = () => {
   const [workout, setWorkout] = useState({
@@ -7,21 +7,30 @@ const Form = () => {
     load: 0,
   });
   const [error, setError] = useState(null);
-  const handleTitleChange = (e) => {
-    setWorkout((state) => ({ ...state, title: e.target.value }));
+  const handleTitleChange = (e: FormEvent) => {
+    setWorkout((state) => ({
+      ...state,
+      title: (e.target as HTMLInputElement).value,
+    }));
   };
-  const handleRepsChange = (e) => {
-    setWorkout((state) => ({ ...state, reps: e.target.value }));
+  const handleRepsChange = (e: FormEvent) => {
+    setWorkout((state) => ({
+      ...state,
+      reps: +(e.target as HTMLInputElement).value,
+    }));
   };
-  const handleLoadChange = (e) => {
-    setWorkout((state) => ({ ...state, load: e.target.value }));
+  const handleLoadChange = (e: FormEvent) => {
+    setWorkout((state) => ({
+      ...state,
+      load: +(e.target as HTMLInputElement).value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const newWorkout = {
       title: workout.title,
-      load: workout.load,
       reps: workout.reps,
+      load: workout.load,
     };
     const response = await fetch(`http://localhost:4000/api/workouts`, {
       method: "POST",

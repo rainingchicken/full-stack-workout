@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import Form from "../components/Form";
 import Workout from "../components/Workout";
-
-interface IWorkout {
-  _id: string;
-  title: string;
-  load: number;
-  reps: number;
-}
+import IWorkout from "../interfaces";
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState<null | any>(null);
+  const [workouts, setWorkouts] = useState<null | Array<IWorkout>>(null);
 
   const fetchWorkouts = async () => {
     const url = `http://localhost:4000/api/workouts`;
