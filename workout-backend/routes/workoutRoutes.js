@@ -5,8 +5,12 @@ const Workout = require("../models/WorkoutModel");
 //GET all workouts
 router.get("/", async (req, res) => {
   //   res.json({ message: "GET all workouts" });
-  const allWorkouts = await Workout.find({});
-  res.status(200).json(allWorkouts);
+  try {
+    const allWorkouts = await Workout.find({});
+    res.status(200).json(allWorkouts);
+  } catch (error) {
+    res.status(404).json({ error: `Something went wrong ${error.message}` });
+  }
 });
 
 //GET this workout
@@ -17,7 +21,7 @@ router.get("/:_id", async (req, res) => {
     const thisWorkout = await Workout.findById(_id);
     res.status(200).json(thisWorkout);
   } catch (error) {
-    res.status(404).json({ error: "Workout not found" });
+    res.status(404).json({ error: `Workout not found ${error.message}` });
   }
 });
 

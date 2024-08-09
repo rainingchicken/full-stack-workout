@@ -6,6 +6,7 @@ const cors = require("cors");
 const conn = require("./db/conn");
 conn();
 
+const userRoutes = require("./routes/userRoutes");
 const workoutRoutes = require("./routes/workoutRoutes");
 
 //middleware
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 //routes
+app.use("/api/user", userRoutes);
 app.use("/api/workouts", workoutRoutes);
 
 //listen
