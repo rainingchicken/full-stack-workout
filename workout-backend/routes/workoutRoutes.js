@@ -9,8 +9,9 @@ router.use(requireAuth);
 //GET all workouts
 router.get("/", async (req, res) => {
   //   res.json({ message: "GET all workouts" });
+  const user_id = req.user._id;
   try {
-    const allWorkouts = await Workout.find({});
+    const allWorkouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
     res.status(200).json(allWorkouts);
   } catch (error) {
     res.status(404).json({ error: `Something went wrong ${error.message}` });
@@ -35,7 +36,8 @@ router.post("/", async (req, res) => {
   const { title, reps, load } = req.body;
   // console.log(req.body);
   try {
-    const newWorkout = await Workout.create({ title, reps, load });
+    const user_id = req.user._id;
+    const newWorkout = await Workout.create({ title, reps, load, user_id });
     res.status(200).json(newWorkout);
   } catch (error) {
     res.status(404).json({ error: error.message });

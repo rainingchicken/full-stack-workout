@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Form = () => {
   const [workout, setWorkout] = useState({
@@ -6,7 +7,9 @@ const Form = () => {
     reps: 0,
     load: 0,
   });
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuthContext();
+
   const handleTitleChange = (e: FormEvent) => {
     setWorkout((state) => ({
       ...state,
@@ -27,6 +30,11 @@ const Form = () => {
   };
 
   const handleSubmit = async () => {
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     const newWorkout = {
       title: workout.title,
       reps: workout.reps,
@@ -37,6 +45,7 @@ const Form = () => {
       body: JSON.stringify(newWorkout),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
 

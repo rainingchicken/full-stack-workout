@@ -1,10 +1,12 @@
 import { useState } from "react";
 import IWorkout from "../interfaces";
+import { useAuthContext } from "../hooks/useAuthContext";
 interface IParameter {
   workout: IWorkout;
 }
 const Workout = ({ workout }: IParameter) => {
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuthContext();
 
   const workoutTitle = workout.title;
   const workoutReps = workout.reps;
@@ -12,6 +14,10 @@ const Workout = ({ workout }: IParameter) => {
   const workoutTimestamp = workout.createdAt;
 
   const handleDeleteClick = async () => {
+    if (!user) {
+      setError("You need to be logged in");
+      return;
+    }
     console.log("deleted");
     const response = await fetch(
       `http://localhost:4000/api/workouts/${workout._id}`,
@@ -19,6 +25,7 @@ const Workout = ({ workout }: IParameter) => {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
       }
     );

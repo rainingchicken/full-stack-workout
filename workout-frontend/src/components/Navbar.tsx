@@ -13,18 +13,17 @@ function Navbar() {
     <header>
       <nav>
         <Link to="/">Home</Link> <Link to="/about">About</Link>{" "}
-        <span id="logoutSpan">
-          {" "}
-          {user && <button onClick={handleLogOutClick}>LOGOUT</button>}
-        </span>{" "}
-        <span id="loginSignupSpan">
-          {" "}
-          {!user && (
+        {user ? (
+          <span id="logoutSpan">
+            <button onClick={handleLogOutClick}>LOGOUT</button>
+          </span>
+        ) : (
+          <span id="loginSignupSpan">
             <>
               <Link to="/login">Login</Link> <Link to="/signup">Signup</Link>
             </>
-          )}
-        </span>
+          </span>
+        )}
       </nav>
     </header>
   );

@@ -24,7 +24,7 @@ export interface IState {
 }
 
 export interface IContext {
-  user: IUserState;
+  user: IState;
   dispatch: Function;
 }
 
@@ -45,7 +45,7 @@ export const authReducer = (state: any | null, action: IAction) => {
 export const AuthContextProvider = ({ children }: IParams) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const user = JSON.parse(localStorage.getItem("user") || "null");
 
     if (user) {
       dispatch({ type: "LOGIN", payload: user });
