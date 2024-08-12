@@ -1,28 +1,30 @@
 import { FormEvent, useState } from "react";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
-  const [login, setLogin] = useState({
+  const [loginInfo, setLoginInfo] = useState({
     username: "",
     password: "",
   });
-
+  const { login, error, isLoading } = useLogin();
   const handleUsernameChange = (e: FormEvent) => {
-    setLogin((state) => ({
+    setLoginInfo((state) => ({
       ...state,
       username: (e.target as HTMLInputElement).value,
     }));
   };
 
   const handlePasswordChange = (e: FormEvent) => {
-    setLogin((state) => ({
+    setLoginInfo((state) => ({
       ...state,
       password: (e.target as HTMLInputElement).value,
     }));
   };
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    await login(loginInfo.username, loginInfo.password);
     console.log("login");
-    console.log(login.username, login.password);
+    // console.log(loginInfo.username, loginInfo.password);
   };
   return (
     <form id="loginForm" onSubmit={handleSubmit}>
@@ -31,7 +33,7 @@ const Login = () => {
       <input
         type="text"
         onChange={handleUsernameChange}
-        value={login.username}
+        value={loginInfo.username}
         placeholder="username"
         id="usernameLoginInput"
       />
@@ -39,11 +41,14 @@ const Login = () => {
       <input
         type="password"
         onChange={handlePasswordChange}
-        value={login.password}
+        value={loginInfo.password}
         placeholder="password"
         id="passwordLoginInput"
       />
-      <button type="submit">LOGIN</button>
+      <button disabled={isLoading} type="submit">
+        LOGIN
+      </button>
+      {error && <div>{error}</div>}
     </form>
   );
 };

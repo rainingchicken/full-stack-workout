@@ -1,28 +1,31 @@
 import { FormEvent, useState } from "react";
+import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
-  const [signup, setSignup] = useState({
+  const [signUpInfo, setSignUpInfo] = useState({
     username: "",
     password: "",
   });
+  const { signup, isLoading, error } = useSignup();
 
   const handleUsernameChange = (e: FormEvent) => {
-    setSignup((state) => ({
+    setSignUpInfo((state) => ({
       ...state,
       username: (e.target as HTMLInputElement).value,
     }));
   };
 
   const handlePasswordChange = (e: FormEvent) => {
-    setSignup((state) => ({
+    setSignUpInfo((state) => ({
       ...state,
       password: (e.target as HTMLInputElement).value,
     }));
   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    await signup(signUpInfo.username, signUpInfo.password);
     console.log("signup");
-    console.log(signup.username, signup.password);
+    // console.log(signUpInfo.username, signUpInfo.password);
   };
   return (
     <form id="signupForm" onSubmit={handleSubmit}>
@@ -31,7 +34,7 @@ const Signup = () => {
       <input
         type="text"
         onChange={handleUsernameChange}
-        value={signup.username}
+        value={signUpInfo.username}
         placeholder="username"
         id="usernameSignupInput"
       />
@@ -39,11 +42,12 @@ const Signup = () => {
       <input
         type="password"
         onChange={handlePasswordChange}
-        value={signup.password}
+        value={signUpInfo.password}
         placeholder="password"
         id="passwordSignupInput"
       />
-      <button type="button">SIGNUP</button>
+      <button disabled={isLoading}>SIGNUP</button>
+      {error && <div>{error}</div>}
     </form>
   );
 };
