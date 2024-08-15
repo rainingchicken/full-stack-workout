@@ -7,23 +7,18 @@ const initialState = {
 interface IParams {
   children: ReactNode;
 }
-export interface IUserState {
-  user: IState | null;
-}
-
-export interface IPayload {
+interface IPayload {
   json: Object;
 }
-export interface IAction {
+interface IAction {
   payload: IPayload;
   type: String;
 }
-export interface IState {
+interface IState {
   token: String;
   username: String;
 }
-
-export interface IContext {
+interface IContext {
   user: IState;
   dispatch: Function;
 }
