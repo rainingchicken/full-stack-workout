@@ -3,12 +3,13 @@ import Form from "../components/Form";
 import Workout from "../components/Workout";
 import IWorkout from "../interfaces";
 import { useAuthContext } from "../hooks/useAuthContext";
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Home = () => {
   const [workouts, setWorkouts] = useState<null | Array<IWorkout>>(null);
   const { user } = useAuthContext();
   const fetchWorkouts = async () => {
-    const url = `https://localhost:4000/api/workouts`;
+    const url = `${VITE_API_BASE_URL}/api/workouts`;
     try {
       const response = await fetch(url, {
         headers: {

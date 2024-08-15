@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const Form = () => {
   const [workout, setWorkout] = useState({
@@ -40,7 +41,7 @@ const Form = () => {
       reps: workout.reps,
       load: workout.load,
     };
-    const response = await fetch(`https://localhost:4000/api/workouts`, {
+    const response = await fetch(`${VITE_API_BASE_URL}api/workouts`, {
       method: "POST",
       body: JSON.stringify(newWorkout),
       headers: {

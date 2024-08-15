@@ -12,6 +12,7 @@ const Workout = ({ workout }: IParameter) => {
   const workoutReps = workout.reps;
   const workoutLoad = workout.load;
   const workoutTimestamp = workout.createdAt;
+  const VITE_API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const handleDeleteClick = async () => {
     if (!user) {
@@ -20,7 +21,7 @@ const Workout = ({ workout }: IParameter) => {
     }
     console.log("deleted");
     const response = await fetch(
-      `https://localhost:4000/api/workouts/${workout._id}`,
+      `${VITE_API_BASE_URL}/api/workouts/${workout._id}`,
       {
         method: "DELETE",
         headers: {
