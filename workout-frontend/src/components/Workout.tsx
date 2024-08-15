@@ -20,7 +20,7 @@ const Workout = ({ workout }: IParameter) => {
     }
     console.log("deleted");
     const response = await fetch(
-      `http://localhost:4000/api/workouts/${workout._id}`,
+      `https://localhost:4000/api/workouts/${workout._id}`,
       {
         method: "DELETE",
         headers: {

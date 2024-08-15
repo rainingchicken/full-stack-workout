@@ -8,7 +8,7 @@ const Home = () => {
   const [workouts, setWorkouts] = useState<null | Array<IWorkout>>(null);
   const { user } = useAuthContext();
   const fetchWorkouts = async () => {
-    const url = `http://localhost:4000/api/workouts`;
+    const url = `https://localhost:4000/api/workouts`;
     try {
       const response = await fetch(url, {
         headers: {
